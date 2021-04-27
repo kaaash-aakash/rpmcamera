@@ -5,6 +5,10 @@
 - Gitflow methadolgies should be used religiosly
 - files that shouldn't be commited must be added to .gitignore.
 - for every new package used .yaml file should be recompiled and pushed in next develop-commit.
+- Files having size < 10mb should be uploaded in this google drive folder.
+    https://drive.google.com/drive/folders/18lvZoHgPh4tyXl4oM-Q5vRjilFS72VRF?usp=sharing
+    - name of file uploaded should be noted in "res\uploaded res.txt" with discription of file.
+    - while using the file add it to .gitignore so that it won't get commited while staging changes.
 
 ## Setting up project in your pc
 - To create the exact environment. (if conda is installed properly on your pc) just type
