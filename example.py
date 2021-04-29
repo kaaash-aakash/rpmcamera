@@ -5,17 +5,15 @@ from matplotlib.patches import Ellipse
 import json
 
 
-
-
 if __name__ == '__main__':
 
     with open('data.json', 'r') as json_file:
         data = json.load(json_file)
-    
+
     # print(x, y)
     x = []
     y = []
-    
+
     for i in range(len(data)):
         x.append(data[i]["center_x"])
         y.append(data[i]["center_y"])
@@ -34,16 +32,20 @@ if __name__ == '__main__':
     print(f'height: {height:.3f}')
     print(f'phi: {phi:.3f}')
 
-    fig = plt.figure(figsize=(6, 6))
+    fig = plt.figure(figsize=(10, 10))
     ax = plt.subplot()
     ax.axis('equal')
     ax.plot(X1, X2, 'ro', zorder=1)
     ellipse = Ellipse(
         xy=center, width=2*width, height=2*height, angle=np.rad2deg(phi),
-        edgecolor='b', fc='None', lw=2, label='Fit', zorder=2
+        edgecolor='b', fc='None', lw=2, label='Fit'
     )
     ax.add_patch(ellipse)
 
+    circle = plt.Circle((center[0], center[1]),
+                        (width+height)/2,
+                        fill=False)
+    ax.add_patch(circle)
     plt.xlabel('$X_1$')
     plt.ylabel('$X_2$')
 
