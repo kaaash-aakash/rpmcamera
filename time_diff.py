@@ -1,4 +1,4 @@
-import moviepy.editor import VideoFileClip
+from moviepy.editor import VideoFileClip
 clip = VideoFileClip("fs3_60.mp4")
 duration = clip.duration  # in secs
 real_fps = (clip.fps)/1.001
