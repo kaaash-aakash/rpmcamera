@@ -1,10 +1,23 @@
 import math
 import json
+from moviepy.editor import VideoFileClip
+
+global flag
+flag = 0
+
+
+def fram_diff(frame1, frame2, flag):
+    # if (flag == 0):
+    #     clip = VideoFileClip(r"res/Fan speed-3 1080p 60fps.mp4")
+    #     flag = (clip.fps)/1.001
+    return((frame1-frame2)/59.94)
+
 
 def lengthSquare(X, Y):
     xDiff = X[0] - Y[0]
     yDiff = X[1] - Y[1]
     return xDiff * xDiff + yDiff * yDiff
+
 
 def angular_displacement(A, B, C):
     """ 
@@ -24,8 +37,6 @@ def angular_displacement(A, B, C):
     b2 = lengthSquare(A, C)
     c2 = lengthSquare(A, B)
 
-
-
     # From Cosine law
     alpha = math.acos((b2 + c2 - a2) /
                       (2 * b * c))
@@ -36,18 +47,21 @@ def angular_displacement(A, B, C):
     # print("alpha : %f" % (alpha))
     return(alpha)
 
-angular_displacement((0,0), (1,0), (0,1))
+
+angular_displacement((0, 0), (1, 0), (0, 1))
 
 data = []
 circle_center = [876.403, 563.273]
 with open(r'data.json', 'r') as json_file:
     data = json.load(json_file)
 
-for i in range(1,len(data)):
-    print(f'angular displacement: {angular_displacement(circle_center, data[i]["circle_adjusted_point"], data[i-1]["circle_adjusted_point"] )}')
 
-
-
+for i in range(1, len(data)):
+    angular_displacement_value = angular_displacement(
+        circle_center, data[i]["circle_adjusted_point"], data[i-1]["circle_adjusted_point"])
+    timediff = fram_diff(data[i]['frame_no'], data[i-1]['frame_no'], flag)
+    print(
+        f'frames: {data[i]["frame_no"]}, {data[i-1]["frame_no"]} angular displacement:{angular_displacement_value} time take: {timediff} rpm: {(angular_displacement_value/360)/(timediff/60)}')
 
 
 # alpha/360 = rotation
