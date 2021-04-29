@@ -3,6 +3,7 @@
 
 import numpy as np
 import cv2
+import json
 
 
 # Capturing video through webcam
@@ -13,6 +14,8 @@ file_path = r'res/Fan speed-3 1080p 60fps.mp4'
 cap = cv2.VideoCapture(file_path)
 
 frame_no = 0
+csv_header_flag = 0
+data_list = []
 # Start a while loop
 while(1):
 	frame_no+=1
@@ -25,7 +28,10 @@ while(1):
 	# BGR(RGB color space) to
 	# HSV(hue-saturation-value)
 	# color space
-	hsvFrame = cv2.cvtColor(imageFrame, cv2.COLOR_BGR2HSV)
+	try:
+		hsvFrame = cv2.cvtColor(imageFrame, cv2.COLOR_BGR2HSV)
+	except:
+		break
 
 	# Set range for red color and
 	# define mask
@@ -97,8 +103,11 @@ while(1):
 			# 						(x + w, y + h),
 			# 						(0, 0, 255), 2)
 
-			print(f"frame no: {frame_no}, center{center}")
+			print(f"frame no: {frame_no}, center({x},{y})")
+			data_list.append({'frame_no': frame_no, 'center_x': x, 'center_y': y})
+
 			
+				
 			cv2.putText(imageFrame, "Red Colour", (int(x)+radius, int(y)+radius),
 						cv2.FONT_HERSHEY_SIMPLEX, 1.0,
 						(0, 0, 255))	
@@ -137,8 +146,16 @@ while(1):
 						1.0, (255, 0, 0))
 			
 	# Program Termination
-	cv2.imshow("Multiple Color Detection in Real-TIme", imageFrame)
-	if cv2.waitKey(10) & 0xFF == ord('q'):
-		cap.release()
-		cv2.destroyAllWindows()
-		break
+	# try:
+	# 	cv2.imshow("Multiple Color Detection in Real-TIme", imageFrame)
+	# 	if cv2.waitKey(10) & 0xFF == ord('q'):
+	# 		cap.release()
+	# 		cv2.destroyAllWindows()
+	# 		break
+	# except:
+	# 	print("video processed")
+
+print(data_list)
+
+with open("data.json", "w") as json_file:
+    json_file.write(json.dumps(data_list, indent = 4))
