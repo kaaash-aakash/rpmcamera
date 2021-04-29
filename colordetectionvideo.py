@@ -15,7 +15,7 @@ cap = cv2.VideoCapture(file_path)
 frame_no = 0
 # Start a while loop
 while(1):
-	frame+=1
+	frame_no+=1
 	# Reading the video from the
 	# webcam in image frames
 	_, imageFrame = cap.read()
@@ -86,12 +86,20 @@ while(1):
 	for pic, contour in enumerate(contours):
 		area = cv2.contourArea(contour)
 		if(area > 200):
-			x, y, w, h = cv2.boundingRect(contour)
-			imageFrame = cv2.rectangle(imageFrame, (x, y),
-									(x + w, y + h),
-									(0, 0, 255), 2)
+
+			(x,y),radius = cv2.minEnclosingCircle(contour)
+			center = (int(x),int(y))
+			radius = int(radius)
+			imageFrame = cv2.circle(imageFrame,center,radius,(0,255,0),2)
+
+			# x, y, w, h = cv2.boundingRect(contour)
+			# imageFrame = cv2.rectangle(imageFrame, (x, y),
+			# 						(x + w, y + h),
+			# 						(0, 0, 255), 2)
+
+			print(f"frame no: {frame_no}, center{center}")
 			
-			cv2.putText(imageFrame, "Red Colour", (x, y),
+			cv2.putText(imageFrame, "Red Colour", (int(x)+radius, int(y)+radius),
 						cv2.FONT_HERSHEY_SIMPLEX, 1.0,
 						(0, 0, 255))	
 

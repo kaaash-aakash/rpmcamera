@@ -3,7 +3,7 @@ import cv2
 import datetime
   
 # create video capture object
-data = cv2.VideoCapture(r'res/fidget.mp4')
+data = cv2.VideoCapture(r'res/Fan speed-3 1080p 60fps.mp4')
   
 # count the number of frames
 frames = data.get(cv2.CAP_PROP_FRAME_COUNT)
