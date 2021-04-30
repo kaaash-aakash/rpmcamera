@@ -8,7 +8,13 @@ import json
 
 # Capturing video through webcam
 # webcam = cv2.VideoCapture(0)
-file_path = r'res/Fan speed-5 1080p 60 fps.mp4'
+file_path = r'res/120_fidget[1].mp4'
+
+file_name = input('Enter the file path that you want to calculate RPM of: ')
+file_path = 'res/'+ file_name
+
+with open('file_name.json', 'w') as json_file:
+    json_file.write(json.dumps(file_path, indent=4))
 # file_path = r'res/fidget.mp4'
 
 cap = cv2.VideoCapture(file_path)
