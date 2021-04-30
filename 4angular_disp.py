@@ -1,6 +1,7 @@
 import math
 import json
 from moviepy.editor import VideoFileClip
+from statistics import mean
 
 global flag
 flag = 0
@@ -55,13 +56,17 @@ circle_center = [876.403, 563.273]
 with open(r'data.json', 'r') as json_file:
     data = json.load(json_file)
 
-
+rpm = []
 for i in range(1, len(data)):
     angular_displacement_value = angular_displacement(
         circle_center, data[i]["circle_adjusted_point"], data[i-1]["circle_adjusted_point"])
     timediff = fram_diff(data[i]['frame_no'], data[i-1]['frame_no'], flag)
     print(
         f'frames: {data[i]["frame_no"]}, {data[i-1]["frame_no"]} angular displacement:{angular_displacement_value} time take: {timediff} rpm: {(angular_displacement_value/360)/(timediff/60)}')
+
+    rpm.append((angular_displacement_value/360)/(timediff/60))
+
+print(f'The rpm of rotating object is : {mean(rpm)}')
 
 
 # alpha/360 = rotation

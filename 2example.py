@@ -20,8 +20,6 @@ if __name__ == '__main__':
 
     X1 = x
     X2 = y
-    print(f"X1 = {X1}")
-    print(f"X2 = {X2}")
 
     X = np.array(list(zip(X1, X2)))
     reg = LsqEllipse().fit(X)

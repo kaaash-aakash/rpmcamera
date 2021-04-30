@@ -50,8 +50,8 @@ def opposite_intersaction_point_delete(int_points, frame_point):
 
 
 if __name__ == "__main__":
-    circle_center = [876.403, 563.273]  # temp
-    circle_radius = (373.717+368.320)/2  # temp
+    circle_center = [875.481, 564.349]  # temp
+    circle_radius = (374.664+368.531)/2  # temp
 
     frame_points = []
 
