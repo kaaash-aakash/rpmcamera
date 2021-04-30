@@ -37,32 +37,23 @@ def opposite_intersaction_point_delete(int_points, frame_point):
         return int_points[1]
 
 
-if __name__ == "__main__":
-    circle_center = []  # temp
-    circle_radius = 0
-    with open('circle.json', 'r') as json_file:
-        circle_list = json.load(json_file)
-        circle_center = circle_list[0]
-        circle_radius = (circle_list[1]+circle_list[2])/2
-
-    frame_points = []
-
-    with open('data.json', 'r') as json_file:
-        frame_points = json.load(json_file)
-
-    for frame_point in frame_points:
-        frame_point_cordinate = (
-            frame_point["center_x"], frame_point["center_y"])
-
-        two_intersection_points = circle_line_segment_intersection(
-            circle_center, circle_radius, circle_center, frame_point_cordinate)
-
-        one_intersection_point = opposite_intersaction_point_delete(
-            two_intersection_points, frame_point_cordinate)
-
-        frame_point['circle_adjusted_point'] = one_intersection_point
-
-    with open("data.json", "w") as json_file:
-        json_file.write(json.dumps(frame_points, indent=4))
-
-    print('point adjusted to the cicle and data stored in data.json')
+circle_center = []  # temp
+circle_radius = 0
+with open('circle.json', 'r') as json_file:
+    circle_list = json.load(json_file)
+    circle_center = circle_list[0]
+    circle_radius = (circle_list[1]+circle_list[2])/2
+frame_points = []
+with open('data.json', 'r') as json_file:
+    frame_points = json.load(json_file)
+for frame_point in frame_points:
+    frame_point_cordinate = (
+        frame_point["center_x"], frame_point["center_y"])
+    two_intersection_points = circle_line_segment_intersection(
+        circle_center, circle_radius, circle_center, frame_point_cordinate)
+    one_intersection_point = opposite_intersaction_point_delete(
+        two_intersection_points, frame_point_cordinate)
+    frame_point['circle_adjusted_point'] = one_intersection_point
+with open("data.json", "w") as json_file:
+    json_file.write(json.dumps(frame_points, indent=4))
+print('point adjusted to the cicle and data stored in data.json')
