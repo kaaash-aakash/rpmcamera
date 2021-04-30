@@ -73,8 +73,8 @@ for i in range(1, len(data)):
     angular_displacement_value = angular_displacement(
         circle_center, data[i]["circle_adjusted_point"], data[i-1]["circle_adjusted_point"])
     timediff = fram_diff(data[i]['frame_no'], data[i-1]['frame_no'], fps_val)
-    print(
-        f'frames: {data[i]["frame_no"]}, {data[i-1]["frame_no"]} angular displacement:{angular_displacement_value} time take: {timediff} rpm: {(angular_displacement_value/360)/(timediff/60)}')
+    # print(
+        # f'frames: {data[i]["frame_no"]}, {data[i-1]["frame_no"]} angular displacement:{angular_displacement_value} time take: {timediff} rpm: {(angular_displacement_value/360)/(timediff/60)}')
 
     rpm.append((angular_displacement_value/360)/(timediff/60)*2)
 if (slowmo_flag == 'Y') or (slowmo_flag == 'y'):
