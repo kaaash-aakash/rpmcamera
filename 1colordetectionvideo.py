@@ -8,7 +8,7 @@ import json
 
 # Capturing video through webcam
 # webcam = cv2.VideoCapture(0)
-file_path = r'res/Fan speed-3 1080p 60fps.mp4'
+file_path = r'res/Fan speed-5 1080p 60 fps.mp4'
 # file_path = r'res/fidget.mp4'
 
 cap = cv2.VideoCapture(file_path)
@@ -154,18 +154,16 @@ while(1):
                                     1.0, (255, 0, 0))
 
     # Program Termination
-    # try:
-    # 	cv2.imshow("Multiple Color Detection in Real-TIme", imageFrame)
-    # 	if cv2.waitKey(10) & 0xFF == ord('q'):
-    # 		cap.release()
-    # 		cv2.destroyAllWindows()
-    # 		break
-    # except:
-    # 	print("video processed")
+    try:
+    	cv2.imshow("Multiple Color Detection in Real-TIme", imageFrame)
+    	if cv2.waitKey(10) & 0xFF == ord('q'):
+    		cap.release()
+    		cv2.destroyAllWindows()
+    		break
+    except:
+    	print("video processed")
 
 # deleting two or more contours in same frame
-
-print(f'len before deleting: {len(data_list)}')
 
 frame_no_list = []
 for data in data_list:
@@ -186,7 +184,6 @@ unique_frame_no_list = unique(frame_no_list)
 for unique_frame_no in unique_frame_no_list:
     count = frame_no_list.count(unique_frame_no)
     if count > 1:
-        print(unique_frame_no)
         for data in data_list:
             if data['frame_no'] == unique_frame_no:
                 data_list.remove(data)
@@ -197,8 +194,10 @@ for unique_frame_no in unique_frame_no_list:
             if data['frame_no'] == unique_frame_no:
                 data_list.remove(data)
 
-print(f'len after deleting: {len(data_list)}')
+print(f'No of data points stored from video :{len(data_list)}')
 
 
 with open("data.json", "w") as json_file:
     json_file.write(json.dumps(data_list, indent=4))
+
+print("data dumped in data.json file.")

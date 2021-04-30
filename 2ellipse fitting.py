@@ -29,7 +29,10 @@ if __name__ == '__main__':
     print(f'width: {width:.3f}')
     print(f'height: {height:.3f}')
     print(f'phi: {phi:.3f}')
+    with open('circle.json', 'w') as json_file:
+        json_file.write(json.dumps(reg.as_parameters(), indent=4))
 
+    print(f'circle data stored in circle.json')
     fig = plt.figure(figsize=(10, 10))
     ax = plt.subplot()
     ax.axis('equal')

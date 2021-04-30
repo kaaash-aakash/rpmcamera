@@ -3,18 +3,6 @@ import json
 
 
 def circle_line_segment_intersection(circle_center, circle_radius, pt1, pt2, full_line=True, tangent_tol=1e-9):
-    """ Find the points at which a circle intersects a line-segment.  This can happen at 0, 1, or 2 points.
-
-    :param circle_center: The (x, y) location of the circle center
-    :param circle_radius: The radius of the circle
-    :param pt1: The (x, y) location of the first point of the segment
-    :param pt2: The (x, y) location of the second point of the segment
-    :param full_line: True to find intersections along full line - not just in the segment.  False will just return intersections within the segment.
-    :param tangent_tol: Numerical tolerance at which we decide the intersections are close enough to consider it a tangent
-    :return Sequence[Tuple[float, float]]: A list of length 0, 1, or 2, where each element is a point at which the circle intercepts a line segment.
-
-    Note: We follow: http://mathworld.wolfram.com/Circle-LineIntersection.html
-    """
 
     (p1x, p1y), (p2x, p2y), (cx, cy) = pt1, pt2, circle_center
     (x1, y1), (x2, y2) = (p1x - cx, p1y - cy), (p2x - cx, p2y - cy)
@@ -50,8 +38,12 @@ def opposite_intersaction_point_delete(int_points, frame_point):
 
 
 if __name__ == "__main__":
-    circle_center = [875.481, 564.349]  # temp
-    circle_radius = (374.664+368.531)/2  # temp
+    circle_center = []  # temp
+    circle_radius = 0
+    with open('circle.json', 'r') as json_file:
+        circle_list = json.load(json_file)
+        circle_center = circle_list[0]
+        circle_radius = (circle_list[1]+circle_list[2])/2
 
     frame_points = []
 
@@ -59,7 +51,8 @@ if __name__ == "__main__":
         frame_points = json.load(json_file)
 
     for frame_point in frame_points:
-        frame_point_cordinate = (frame_point["center_x"], frame_point["center_y"])
+        frame_point_cordinate = (
+            frame_point["center_x"], frame_point["center_y"])
 
         two_intersection_points = circle_line_segment_intersection(
             circle_center, circle_radius, circle_center, frame_point_cordinate)
@@ -72,4 +65,4 @@ if __name__ == "__main__":
     with open("data.json", "w") as json_file:
         json_file.write(json.dumps(frame_points, indent=4))
 
-
+    print('point adjusted to the cicle and data stored in data.json')

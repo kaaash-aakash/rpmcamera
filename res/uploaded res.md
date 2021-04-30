@@ -1,2 +1,0 @@
-- fan30fpsAniketMobile.avi : this file has exact fps of 29.97. because the last random frame was delted using editor
-- fan30fpsAniketMobile.mp4 : fps 29.55. above file without editing.

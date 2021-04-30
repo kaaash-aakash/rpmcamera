@@ -3,11 +3,8 @@ import json
 from moviepy.editor import VideoFileClip
 from statistics import mean
 
-global flag
-flag = 0
 
-
-def fram_diff(frame1, frame2, flag):
+def fram_diff(frame1, frame2):
     # if (flag == 0):
     #     clip = VideoFileClip(r"res/Fan speed-3 1080p 60fps.mp4")
     #     flag = (clip.fps)/1.001
@@ -48,7 +45,7 @@ def angular_displacement(A, B, C):
     # print("alpha : %f" % (alpha))
     return(alpha)
 
-
+print("processing whole data to get the average rpm (please wait)...")
 angular_displacement((0, 0), (1, 0), (0, 1))
 
 data = []
@@ -60,13 +57,13 @@ rpm = []
 for i in range(1, len(data)):
     angular_displacement_value = angular_displacement(
         circle_center, data[i]["circle_adjusted_point"], data[i-1]["circle_adjusted_point"])
-    timediff = fram_diff(data[i]['frame_no'], data[i-1]['frame_no'], flag)
-    print(
-        f'frames: {data[i]["frame_no"]}, {data[i-1]["frame_no"]} angular displacement:{angular_displacement_value} time take: {timediff} rpm: {(angular_displacement_value/360)/(timediff/60)}')
+    timediff = fram_diff(data[i]['frame_no'], data[i-1]['frame_no'])
+    # print(
+    #     f'frames: {data[i]["frame_no"]}, {data[i-1]["frame_no"]} angular displacement:{angular_displacement_value} time take: {timediff} rpm: {(angular_displacement_value/360)/(timediff/60)}')
 
-    rpm.append((angular_displacement_value/360)/(timediff/60))
+    rpm.append((angular_displacement_value/360)/(timediff/60)*2)
 
-print(f'The rpm of rotating object is : {mean(rpm)}')
+print(f'The rpm of rotating object is : {mean(rpm):.3f}')
 
 
 # alpha/360 = rotation
